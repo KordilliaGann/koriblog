@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth import logout
 
 
 
@@ -56,5 +57,10 @@ def post_publish(request, pk):
 def post_remove(request, pk):
 	post = get_object_or_404(Post, pk=pk)
 	post.delete()
+	return redirect('blog.views.post_list')
+
+@login_required	
+def logout_view(request):
+	logout(request)
 	return redirect('blog.views.post_list')
 
